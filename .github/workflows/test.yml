@@ -9,11 +9,12 @@ jobs:
   foundry:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - uses: foundry-rs/foundry-toolchain@v1
         with:
-          version: stable
+          # pinned so results are reproducible; "stable" moves with every release
+          version: v1.8.5
 
       - name: Install dependencies (pinned)
         run: |

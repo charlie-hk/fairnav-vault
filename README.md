@@ -98,7 +98,7 @@ Guaranteed by the contract and checked by tests:
 
 ## Tests
 
-58 tests, all passing. A test count is not a proof of security; what matters is what the tests check and whether they can fail. Both are described below.
+58 tests, all passing. Foundry 1.8 and later runs the 12 invariant tests as one test, so `forge test` and the GitHub Actions log report **47 tests**: 46 plus 1 invariant suite that contains all 12. Every invariant is still listed and checked by name. A test count is not a proof of security; what matters is what the tests check and whether they can fail. Both are described below.
 
 - **36 unit and fuzz tests** (`test/FairNAVVault.t.sol`): caps at their exact boundaries, the per-transaction limit, pause behaviour, non-transferable shares, self-deposit only, withdrawals through an allowance, two-step ownership, pro-rata loss sharing, total-loss handling, the price floor, the inflation attack, and the known loss-timing limitation. 4 fuzz tests, 1,000 random cases each.
 - **1 cap-griefing test** (`test/CapGriefing.t.sol`): a 5 WETH deposit plus a 95 WETH donation must not close deposits for others.
@@ -146,14 +146,14 @@ The invariant tests do not cover the loss-timing limitation above. It is a prope
 
 ### Independent verification
 
-Every push runs the full suite on GitHub's servers (`.github/workflows/test.yml`), with the dependencies pinned to forge-std v1.17.0 and OpenZeppelin v5.1.0. The badge at the top shows the latest result.
+Every push runs the full suite on GitHub's servers (`.github/workflows/test.yml`), with Foundry pinned to v1.8.5 and the dependencies pinned to forge-std v1.17.0 and OpenZeppelin v5.1.0. The badge at the top shows the latest result.
 
 ## Run it
 
 ```bash
 forge install foundry-rs/forge-std@v1.17.0 OpenZeppelin/openzeppelin-contracts@v5.1.0
 forge build
-forge test               # all 58 tests
+forge test               # 58 tests (reported as 47 by Foundry 1.8+, see Tests)
 forge test -vv --mt invariant_   # invariants, with coverage counters printed
 ```
 
