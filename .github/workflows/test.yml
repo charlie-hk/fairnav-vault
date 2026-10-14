@@ -1,0 +1,27 @@
+name: tests
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  foundry:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: stable
+
+      - name: Install dependencies (pinned)
+        run: |
+          forge install foundry-rs/forge-std@v1.17.0 --no-git
+          forge install OpenZeppelin/openzeppelin-contracts@v5.1.0 --no-git
+
+      - name: Build
+        run: forge build --sizes
+
+      - name: Test (unit, fuzz, invariant, deploy)
+        run: forge test -vv
