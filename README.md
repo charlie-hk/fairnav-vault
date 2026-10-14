@@ -1,4 +1,4 @@
-![FairNAV Vault](assets/cover.png)
+![FairNAV Vault](assets/cover.png?v=2)
 
 # FairNAV Vault
 
